@@ -37,8 +37,8 @@ public class UserController {
      * @return
      * @apiNote this api is used for save user
      */
-    @PostMapping
-    public ResponseEntity<UserDto> saveUser(@Valid @RequestBody UserDto userDto) {
+    @PostMapping("/user")
+    public ResponseEntity<UserDto> saveUser( @Valid @RequestBody UserDto userDto) {
         log.info(" Starting request for service layer to save the user");
         UserDto userdto = this.userService.saveUser(userDto);
         log.info("Ending request  for service layer to save the user");

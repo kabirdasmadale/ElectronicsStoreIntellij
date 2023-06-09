@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="user")
+@Table(name="user_table")
 public class User {
 
     @Id
@@ -28,7 +28,7 @@ public class User {
     @Column(name="user_gender")
     private String gender;
 
-    @Column(name="user_about",length = 1000)
+    @Column(name="user_about")
     private String about;
 
     @Column(name="image_name")

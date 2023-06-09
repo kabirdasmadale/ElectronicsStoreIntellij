@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import java.util.UUID;
 import java.util.stream.Collectors;
 @Slf4j
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         //for every time random Id will be stored
         String randomId = UUID.randomUUID().toString();
         user.setUserId((randomId));
-        user.setImageName("kabir.png");
+      //  user.setImageName("kabir.png");
         User user1= this.userRepo.save(user);
         log.info("Request completed  to save the user");
         return this.mapper.map(user1, UserDto.class);
