@@ -1,5 +1,6 @@
 package com.bikkadit.electronicstore.service.impl;
 
+import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.dtos.UserDto;
 import com.bikkadit.electronicstore.exception.ResourceNotFoundException;
 import com.bikkadit.electronicstore.helper.AppConstant;
@@ -9,6 +10,11 @@ import com.bikkadit.electronicstore.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,12 +54,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir) {
         log.info("Request Starting  to get All users");
-        List<User> list = this.userRepo.findAll();
-        List<UserDto> userdata = list.stream().map(data -> this.mapper.map(data, UserDto.class)).collect(Collectors.toList());
+        Sort sort = Sort.by(sortBy);
+        PageRequest pagable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<User> page = this.userRepo.findAll(pagable);
+        List<User> users = page.getContent();
+        List<UserDto> userlist = users.stream().map(data -> this.mapper.map(data, UserDto.class)).collect(Collectors.toList());
+
+        PageableResponse response=new PageableResponse();
+        response.setContent(userlist);
+        response.setPageNumber(page.getNumber());
+        response.setPageSize(page.getSize());
+        response.setTotalPages(page.getTotalPages());
+        response.setTotalElement(page.getTotalElements());
+        response.setLastPage(page.isLast());
         log.info("Request completed  to get All users");
-        return userdata;
+        return response;
     }
 
     @Override

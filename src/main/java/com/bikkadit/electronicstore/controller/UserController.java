@@ -1,6 +1,7 @@
 package com.bikkadit.electronicstore.controller;
 
 import com.bikkadit.electronicstore.dtos.ImageResponse;
+import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.dtos.UserDto;
 import com.bikkadit.electronicstore.helper.ApiResponse;
 import com.bikkadit.electronicstore.helper.AppConstant;
@@ -67,11 +68,16 @@ public class UserController {
      */
 
     @GetMapping()
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<PageableResponse<UserDto>> getAllUsers(
+            @RequestParam (value = "pageNumber",defaultValue = "0",required = false)  int pageNumber,
+            @RequestParam (value ="pageSize",defaultValue = "6",required = false)  int pageSize,
+            @RequestParam (value ="sortBy",defaultValue = "userName",required = false)  String sortBy,
+            @RequestParam (value ="sortDir",defaultValue = "asc",required = false) String sortDir
+    ) {
         log.info(" Starting request  for service layer to get All users");
-        List<UserDto> list = this.userService.getAllUsers();
+        PageableResponse<UserDto> allUsers = this.userService.getAllUsers(pageNumber, pageSize, sortBy, sortDir);
         log.info("Ending request for service layer to get All users");
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
     }
 

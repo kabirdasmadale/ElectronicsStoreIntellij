@@ -16,7 +16,6 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
-
     @Override
     public String uplodfiles(MultipartFile file, String path) throws IOException {
         String originalFilename = file.getOriginalFilename();
@@ -26,14 +25,12 @@ public class FileServiceImpl implements FileService {
         String fileNameWithExtension = filename + extension;
         String fullPathWithFileName = path  + fileNameWithExtension;
 
-        if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpa") || extension.equalsIgnoreCase(".jpeg")) {
+        if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")) {
             // file save
             File folder = new File(path);
-
             if (!folder.exists()) {
                 // create the folder
                 folder.mkdirs();
-
             }
             Files.copy(file.getInputStream(), Paths.get(fullPathWithFileName));
             return fileNameWithExtension;
