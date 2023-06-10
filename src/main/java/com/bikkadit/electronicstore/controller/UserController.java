@@ -32,12 +32,12 @@ public class UserController {
     private String imageUplodPath;
 
     /**
-     * author Kabirdas Madale
-     *
+     * @author kabirdas madale
+     * @apiNote  this api is used to save user
      * @param userDto
      * @return
-     * @apiNote this api is used for save user
      */
+
     @PostMapping("/user")
     public ResponseEntity<UserDto> saveUser( @Valid @RequestBody UserDto userDto) {
         log.info(" Starting request for service layer to save the user");
@@ -47,10 +47,10 @@ public class UserController {
     }
 
     /**
+     * @author  kabirdas madale
+     * @apiNote  this api is used to get user by id
      * @param userId
      * @return
-     * @author Kabirdas Madale
-     * @apiNote this api is used to get user by id
      */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
@@ -62,10 +62,15 @@ public class UserController {
     }
 
     /**
+     * @author kabirdas madale
+     * @apiNote  this api is used to get all user
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
      * @return
-     * @author Kabirdas Madale
-     * @apiNote this api is used to get all user
      */
+
 
     @GetMapping()
     public ResponseEntity<PageableResponse<UserDto>> getAllUsers(
@@ -82,11 +87,12 @@ public class UserController {
     }
 
     /**
+     * @apiNote
+     * @author kabirdas madale
+     * @apiNote this api is used to update user
      * @param userDto
      * @param userId
      * @return
-     * @author Kabirdas Madale
-     * @apiNote this api is used to update user
      */
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable String userId) {
@@ -98,10 +104,10 @@ public class UserController {
     }
 
     /**
+     * @author kabirdas madale
+     * @apiNote this api is used to delete user
      * @param userId
      * @return
-     * @author Kabirdas madale
-     * @apiNote this api is used to delete user by id
      */
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable String userId) {
@@ -118,10 +124,10 @@ public class UserController {
     }
 
     /**
+     * @author kabirdas madale
+     * @apiNote this api is used to get user by email
      * @param email
      * @return
-     * @author Kabirdas Madale
-     * @apiNote this api is used to get user by email
      */
 
     @GetMapping("/email/{email}")
@@ -134,10 +140,10 @@ public class UserController {
     }
 
     /**
+     * @author kabirdas madale
+     * @apiNote this api is used to search user
      * @param keyword
      * @return
-     * @author Kabirdas Madale
-     * @apiNote this api is used to serch user
      */
     @GetMapping("/search/{keyword}")
     public ResponseEntity<List<UserDto>> searchUser(@PathVariable String keyword) {
@@ -149,8 +155,8 @@ public class UserController {
     }
 
     /**
-     * @author Kabirdas Madale
-     * @apiNote  this api is used to uplod the image
+     * @author kabirdas madale
+     * @apiNote this api is used to uplod image
      * @param image
      * @param userId
      * @return
@@ -160,22 +166,25 @@ public class UserController {
 
     @PostMapping("/image/{userId}")
     public ResponseEntity<ImageResponse> uplodImage(@RequestParam("userImage") MultipartFile image, @PathVariable String userId) throws IOException {
+        log.info(" Starting request  for uplod image");
         String imageName = fileService.uplodfiles(image, imageUplodPath);
         UserDto user = userService.getUserById(userId);
         user.setImageName(imageName);
         UserDto userDto = userService.updateUser(user, userId);
         ImageResponse imageResponse=ImageResponse.builder().imageName(imageName).success(true).Status(HttpStatus.CREATED).build();
+        log.info(" Ending request for uplod image");
     return  new ResponseEntity<>(imageResponse,HttpStatus.CREATED );
     }
     // serve image
 
     /**
-     * @author Kabirdas Madale
+     * @author kabirdas madale
      * @apiNote  this api is used to dawanlod image
      * @param userId
      */
     @GetMapping("/image/{userId}")
     public void dawanlodeServeImage(@PathVariable String userId){
+        log.info(" Starting request  for dawanlod image");
         UserDto user = userService.getUserById(userId);
         log.info("get user image :{}",user.getImageName());
 

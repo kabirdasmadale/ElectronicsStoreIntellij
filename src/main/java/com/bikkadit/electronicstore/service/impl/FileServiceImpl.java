@@ -2,6 +2,7 @@ package com.bikkadit.electronicstore.service.impl;
 
 import com.bikkadit.electronicstore.exception.BadApiRequestException;
 import com.bikkadit.electronicstore.service.FileService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class FileServiceImpl implements FileService {
 
-    private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+   // private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
     @Override
     public String uplodfiles(MultipartFile file, String path) throws IOException {
+        log.info(" Starting request  for uplod image");
         String originalFilename = file.getOriginalFilename();
-        logger.info("filename:{}", originalFilename);
+        log.info("filename:{}", originalFilename);
         String filename = UUID.randomUUID().toString();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String fileNameWithExtension = filename + extension;
@@ -42,8 +45,10 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public InputStream getResorse(String path, String name) throws FileNotFoundException {
+        log.info(" Starting request  for get resorse");
         String fulPath=path+File.separator+name;
         InputStream inputStream=new FileInputStream(fulPath);
+        log.info(" Ending request for get resorse");
         return inputStream;
     }
 }
