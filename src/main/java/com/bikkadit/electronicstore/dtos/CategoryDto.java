@@ -1,9 +1,15 @@
 package com.bikkadit.electronicstore.dtos;
 
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CategoryDto {
     private String categoryId;
 
