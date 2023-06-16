@@ -11,7 +11,7 @@ public interface UserService {
 
     UserDto getUserById(String userId);
 
-    PageableResponse<UserDto> getAllUsers(int pageNumber , int pageSize, String sortBy, String sortDir);
+    PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir);
 
     UserDto updateUser(UserDto userDto,String userId);
 
