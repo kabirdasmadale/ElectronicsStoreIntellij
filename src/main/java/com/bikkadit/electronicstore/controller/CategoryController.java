@@ -40,6 +40,12 @@ public class CategoryController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
     //getCategory by id
+@GetMapping("/category/{categoryId}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable String categoryId){
+        CategoryDto categorybyId = this.categoryServiceI.getCategorybyId(categoryId);
+        return new ResponseEntity<CategoryDto>(categorybyId,HttpStatus.OK);
+
+    }
 
     // getAllCategory by id
     //serch category by title
