@@ -4,6 +4,7 @@ import com.bikkadit.electronicstore.dtos.CategoryDto;
 import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.exception.ResourceNotFoundException;
 import com.bikkadit.electronicstore.helper.AppConstant;
+import com.bikkadit.electronicstore.helper.General;
 import com.bikkadit.electronicstore.model.Category;
 import com.bikkadit.electronicstore.repositary.CategoryRepository;
 import com.bikkadit.electronicstore.service.CategoryServiceI;
@@ -14,11 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+@Service
 public class CategoryImpl implements CategoryServiceI {
     @Autowired
     private CategoryRepository categoryRepositary;
@@ -65,7 +67,7 @@ public class CategoryImpl implements CategoryServiceI {
         Sort sort=(sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Category> page = categoryRepositary.findAll(pageable);
-        PageableResponse<CategoryDto> pageableResponse = Helper.getPageableRespons(page, CategoryDto.class);
+        PageableResponse<CategoryDto> pageableResponse = General.getPageableResponse(page, CategoryDto.class);
         return pageableResponse;
     }
 
