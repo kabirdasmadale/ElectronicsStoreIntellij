@@ -14,9 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
-
-
+public class Category  {
     @Id
     private String categoryId;
 
