@@ -9,9 +9,6 @@ import org.springframework.data.domain.Sort;
 
 public class Helper {
 
-
-
-
     public static <T, E> PageableResponse<T> getPageableResponse(Page<E> page, Class<T> dtoClass) {
         Page<T> dtoPage = page.map(entity -> new ModelMapper().map(entity,dtoClass));
         return PageableResponse.<T>builder()
@@ -21,7 +18,5 @@ public class Helper {
                 .totalElement(dtoPage.getTotalElements())
                 .totalPages(dtoPage.getTotalPages())
                 .lastPage(dtoPage.isLast()).build();
-
-
     }
 }
