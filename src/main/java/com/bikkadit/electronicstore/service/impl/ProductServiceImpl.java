@@ -73,7 +73,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageableResponse<ProductDtos> getAllLive(int pageNumber, int pageSize, String sortBy, String sortDir) {
-
         Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
         Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<ProductDtos> page = this.productRepositary.findByLiveTrue(pageable);
@@ -90,4 +89,6 @@ public class ProductServiceImpl implements ProductService {
         Page<ProductDtos> page = this.productRepositary.findByTitleContaining(keyword, pageable);
         return Helper.getPageableResponse(page, ProductDtos.class);
     }
+
+
 }
