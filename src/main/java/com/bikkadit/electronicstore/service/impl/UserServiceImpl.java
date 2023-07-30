@@ -10,6 +10,7 @@ import com.bikkadit.electronicstore.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper mapper;
+    @Value("${/images/users/}")
+    private String imagepath;
 
     @Override
     public UserDto saveUser(UserDto userDto) {

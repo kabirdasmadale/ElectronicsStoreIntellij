@@ -1,13 +1,20 @@
 package com.bikkadit.electronicstore.service.impl;
 
+import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.dtos.ProductDtos;
 import com.bikkadit.electronicstore.exception.ResourceNotFoundException;
 import com.bikkadit.electronicstore.helper.AppConstant;
+import com.bikkadit.electronicstore.helper.Helper;
 import com.bikkadit.electronicstore.model.Product;
 import com.bikkadit.electronicstore.repositary.ProductRepositary;
 import com.bikkadit.electronicstore.service.ProductService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String productId) {
-        Product product = this.productRepositary.findById(productId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_DELETE));
+        Product product = this.productRepositary.findById(productId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_EXCEPTION));
         this.productRepositary.delete(product);
     }
 
@@ -56,20 +63,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDtos> getAllProduct() {
-        List<Product> allProduct = this.productRepositary.findAll();
-        return allProduct.stream().map((all)-> this.modelMapper.map(all, ProductDtos.class)).collect(Collectors.toList());
+    public PageableResponse<ProductDtos> getAllProduct(int pageNumber, int pageSize, String sortBy, String sortDir) {
+        Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
+        Page<Product> page = this.productRepositary.findAll(pageable);
+        return Helper.getPageableResponse(page, ProductDtos.class);
 
     }
 
     @Override
-    public List<ProductDtos> getAllLive() {
+    public PageableResponse<ProductDtos> getAllLive(int pageNumber, int pageSize, String sortBy, String sortDir) {
 
-        return null;
+        Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
+        Page<ProductDtos> page = this.productRepositary.findByLiveTrue(pageable);
+        return Helper.getPageableResponse(page, ProductDtos.class);
+
     }
 
+
     @Override
-    public List<ProductDtos> serchByTitle(String keyword) {
-        return null;
+    public PageableResponse<ProductDtos> serchByTitle(String keyword, int pageNumber, int pageSize, String sortBy, String sortDir) {
+
+        Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
+        Page<ProductDtos> page = this.productRepositary.findByTitleContaining(keyword, pageable);
+        return Helper.getPageableResponse(page, ProductDtos.class);
     }
 }

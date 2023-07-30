@@ -9,5 +9,9 @@ public class AppConstant {
     public static final String CATEGORY_DELETE ="Category Deleted Successfully";
     public static final boolean CATEGORY_STATUS =true;
 
+
+    public static final String PRODUCT_EXCEPTION ="Product not found with given id ....";
+    public static final String PRODUCT_DELETE ="Product Deleted Successfully";
+
 }
 

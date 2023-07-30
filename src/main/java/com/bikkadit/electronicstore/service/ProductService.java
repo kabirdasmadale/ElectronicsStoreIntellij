@@ -1,5 +1,6 @@
 package com.bikkadit.electronicstore.service;
 
+import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.dtos.ProductDtos;
 
 import java.util.List;
@@ -15,10 +16,10 @@ public interface ProductService {
     //get singale
     ProductDtos getProductByProductId(String productId);
     //get all
-    List<ProductDtos> getAllProduct();
+ PageableResponse<ProductDtos> getAllProduct(int pageNumber, int pageSize,String sortBy,String sortDir);
     //get all:live
-    List<ProductDtos> getAllLive();
+    PageableResponse<ProductDtos> getAllLive(int pageNumber, int pageSize,String sortBy,String sortDir);
     // serch by title
-    List<ProductDtos> serchByTitle(String keyword);
+    PageableResponse<ProductDtos>serchByTitle(String keyword,int pageNumber, int pageSize,String sortBy,String sortDir);
 
 }
