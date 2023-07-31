@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper mapper;
-    @Value("${/images/users/}")
-    private String imagepath;
+//    @Value("${/images/users/}")
+//    private String imagepath;
 
     @Override
     public UserDto saveUser(UserDto userDto) {
