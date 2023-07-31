@@ -17,6 +17,7 @@ import java.util.Date;
 public class ProductDtos {
 
     private String productId;
+
     @NotBlank(message = "Invalid product title: Empty product title")
     @NotNull(message = "Invalid product title: product title is NULL")
     @Size(min = 3, max = 30, message = "Invalid product title: Must be of 3 - 30 characters")
@@ -29,10 +30,15 @@ public class ProductDtos {
 
     @Size(max =9999,message = "price is not in the range..")
     private int price;
+
     private int discountPrice;
+
     private String quantity;
+
     private Date addedDate;
+
     private boolean live;
+
     private boolean stotck;
 
 }
